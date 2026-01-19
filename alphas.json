@@ -1,0 +1,346 @@
+[
+    {
+        "alpha_expression": "<alpha_expression>",
+        "economic_rationale": "This alpha buys stocks whose model-implied growth component has been improving over the last quarter (positive change in mdl110_growth over 63 days) while penalizing stocks with high overall model risk/volatility (proxied by the time-series standard deviation of mdl110_score). The z-scoring makes both components comparable; taking the negative of the volatility z-score rewards low-volatility names. It exploits investors\u2019 slow reaction to persistent fundamental growth upgrades and their tendency to demand a volatility premium, leading low-risk, improving-growth stocks to outperform.",
+        "data_fields_used": [
+            "mdl110_growth",
+            "mdl110_score"
+        ],
+        "operators_used": [
+            "add",
+            "zscore",
+            "ts_delta",
+            "ts_std_dev",
+            "reverse"
+        ],
+        "alpha_settings": {
+            "type": "REGULAR",
+            "settings": {
+                "instrumentType": "EQUITY",
+                "region": "USA",
+                "universe": "TOP1000",
+                "delay": 1,
+                "decay": 4,
+                "neutralization": "SECTOR",
+                "truncation": 0.02,
+                "pasteurization": "ON",
+                "testPeriod": "P2Y",
+                "unitHandling": "VERIFY",
+                "nanHandling": "ON",
+                "maxTrade": "OFF",
+                "language": "FASTEXPR",
+                "visualization": true
+            },
+            "regular": "<alpha_expression>"
+        }
+    },
+    {
+        "alpha_expression": "<alpha_expression>",
+        "economic_rationale": "The first term is a 6\u2011month information ratio of the growth score: high values signal stable, persistent growth strength (high mean, low variability). The second term subtracts the 6\u2011month volatility of the overall model score, favoring names with more stable composite signals. This targets stocks with consistently strong growth and low model-signal volatility, which should correlate with stable underlying fundamentals and lower risk, consistent with the hypothesis that such names outperform.",
+        "data_fields_used": [
+            "mdl110_growth",
+            "mdl110_score"
+        ],
+        "operators_used": [
+            "add",
+            "ts_ir",
+            "ts_std_dev",
+            "reverse"
+        ],
+        "alpha_settings": {
+            "type": "REGULAR",
+            "settings": {
+                "instrumentType": "EQUITY",
+                "region": "USA",
+                "universe": "TOP1000",
+                "delay": 1,
+                "decay": 4,
+                "neutralization": "SECTOR",
+                "truncation": 0.02,
+                "pasteurization": "ON",
+                "testPeriod": "P2Y",
+                "unitHandling": "VERIFY",
+                "nanHandling": "ON",
+                "maxTrade": "OFF",
+                "language": "FASTEXPR",
+                "visualization": true
+            },
+            "regular": "<alpha_expression>"
+        }
+    },
+    {
+        "alpha_expression": "<alpha_expression>",
+        "economic_rationale": "Over the past quarter, this ranks today\u2019s growth score relative to its own 63\u2011day history (high when growth signal is near its local high) and subtracts the rank of recent 1\u2011month volatility of the composite score. It focuses on names where growth is locally strong versus their own past while their near-term risk profile is locally low. Such combinations tend to be under-owned because attention is often on high-beta growth, leaving steady growers with subdued risk underpriced.",
+        "data_fields_used": [
+            "mdl110_growth",
+            "mdl110_score"
+        ],
+        "operators_used": [
+            "add",
+            "ts_rank",
+            "ts_std_dev",
+            "reverse"
+        ],
+        "alpha_settings": {
+            "type": "REGULAR",
+            "settings": {
+                "instrumentType": "EQUITY",
+                "region": "USA",
+                "universe": "TOP1000",
+                "delay": 1,
+                "decay": 4,
+                "neutralization": "SECTOR",
+                "truncation": 0.02,
+                "pasteurization": "ON",
+                "testPeriod": "P2Y",
+                "unitHandling": "VERIFY",
+                "nanHandling": "ON",
+                "maxTrade": "OFF",
+                "language": "FASTEXPR",
+                "visualization": true
+            },
+            "regular": "<alpha_expression>"
+        }
+    },
+    {
+        "alpha_expression": "<alpha_expression>",
+        "economic_rationale": "Both growth and composite scores are standardized versus their own 1\u2011year history. The alpha is high when a stock\u2019s growth signal is unusually strong versus its past while its overall model score volatility is unusually low (proxied here by the negative z-scored score level, assuming higher score is associated with more aggressive factor exposures and risk). This captures long-horizon improvement in growth fundamentals combined with a stable, conservative overall factor profile, which investors typically reward over time through multiple expansion with limited drawdowns.",
+        "data_fields_used": [
+            "mdl110_growth",
+            "mdl110_score"
+        ],
+        "operators_used": [
+            "add",
+            "ts_zscore",
+            "reverse"
+        ],
+        "alpha_settings": {
+            "type": "REGULAR",
+            "settings": {
+                "instrumentType": "EQUITY",
+                "region": "USA",
+                "universe": "TOP1000",
+                "delay": 1,
+                "decay": 4,
+                "neutralization": "SECTOR",
+                "truncation": 0.02,
+                "pasteurization": "ON",
+                "testPeriod": "P2Y",
+                "unitHandling": "VERIFY",
+                "nanHandling": "ON",
+                "maxTrade": "OFF",
+                "language": "FASTEXPR",
+                "visualization": true
+            },
+            "regular": "<alpha_expression>"
+        }
+    },
+    {
+        "alpha_expression": "<alpha_expression>",
+        "economic_rationale": "Cross-sectionally each day, stocks with high growth scores and low recent model-score volatility are preferred. This is a simple cross-sectional implementation of the hypothesis: it directly buys high-growth, low-volatility names and shorts low-growth, high-volatility names. It exploits the tendency of investors to overpay for volatile growth and underpay for stable growers, creating a persistent return premium for low-volatility growth stocks.",
+        "data_fields_used": [
+            "mdl110_growth",
+            "mdl110_score"
+        ],
+        "operators_used": [
+            "add",
+            "rank",
+            "ts_std_dev",
+            "reverse"
+        ],
+        "alpha_settings": {
+            "type": "REGULAR",
+            "settings": {
+                "instrumentType": "EQUITY",
+                "region": "USA",
+                "universe": "TOP1000",
+                "delay": 1,
+                "decay": 4,
+                "neutralization": "SECTOR",
+                "truncation": 0.02,
+                "pasteurization": "ON",
+                "testPeriod": "P2Y",
+                "unitHandling": "VERIFY",
+                "nanHandling": "ON",
+                "maxTrade": "OFF",
+                "language": "FASTEXPR",
+                "visualization": true
+            },
+            "regular": "<alpha_expression>"
+        }
+    },
+    {
+        "alpha_expression": "<alpha_expression>",
+        "economic_rationale": "Instead of the growth level, this focuses on the 3\u2011month change in the growth component, rewarding stocks whose growth signal is improving, not just high. It simultaneously penalizes high 3\u2011month volatility in the composite score. This targets early-stage growth accelerators that are becoming more attractive from a growth perspective while their overall risk profile remains relatively contained, exploiting the slow diffusion of information about improving fundamentals in low-risk names.",
+        "data_fields_used": [
+            "mdl110_growth",
+            "mdl110_score"
+        ],
+        "operators_used": [
+            "add",
+            "rank",
+            "ts_delta",
+            "ts_std_dev",
+            "reverse"
+        ],
+        "alpha_settings": {
+            "type": "REGULAR",
+            "settings": {
+                "instrumentType": "EQUITY",
+                "region": "USA",
+                "universe": "TOP1000",
+                "delay": 1,
+                "decay": 4,
+                "neutralization": "SECTOR",
+                "truncation": 0.02,
+                "pasteurization": "ON",
+                "testPeriod": "P2Y",
+                "unitHandling": "VERIFY",
+                "nanHandling": "ON",
+                "maxTrade": "OFF",
+                "language": "FASTEXPR",
+                "visualization": true
+            },
+            "regular": "<alpha_expression>"
+        }
+    },
+    {
+        "alpha_expression": "<alpha_expression>",
+        "economic_rationale": "The growth component is smoothed by a 2\u2011month linear decay, overweighting recent growth information but still using a short history to reduce noise. The alpha then subtracts 2\u2011month volatility of the model score. This construction favors stocks with steadily strong recent growth signals and tempered short-term risk, capturing the idea that smoother, sustained growth paths with low signal volatility tend to be mispriced upward over medium horizons.",
+        "data_fields_used": [
+            "mdl110_growth",
+            "mdl110_score"
+        ],
+        "operators_used": [
+            "add",
+            "ts_decay_linear",
+            "ts_std_dev",
+            "reverse"
+        ],
+        "alpha_settings": {
+            "type": "REGULAR",
+            "settings": {
+                "instrumentType": "EQUITY",
+                "region": "USA",
+                "universe": "TOP1000",
+                "delay": 1,
+                "decay": 4,
+                "neutralization": "SECTOR",
+                "truncation": 0.02,
+                "pasteurization": "ON",
+                "testPeriod": "P2Y",
+                "unitHandling": "VERIFY",
+                "nanHandling": "ON",
+                "maxTrade": "OFF",
+                "language": "FASTEXPR",
+                "visualization": true
+            },
+            "regular": "<alpha_expression>"
+        }
+    },
+    {
+        "alpha_expression": "<alpha_expression>",
+        "economic_rationale": "This takes a 6\u2011month average of the growth score (a medium-term growth strength measure) and combines it with a penalty for high 1\u2011month volatility in the composite score. Economically, it looks for stocks with structurally high growth over half a year but benign short-term risk characteristics. Such names are often used as low-risk growth compounders and may be underpriced relative to their long-run fundamentals due to investors\u2019 focus on exciting, high-volatility growth stories.",
+        "data_fields_used": [
+            "mdl110_growth",
+            "mdl110_score"
+        ],
+        "operators_used": [
+            "add",
+            "rank",
+            "ts_mean",
+            "ts_std_dev",
+            "zscore",
+            "reverse"
+        ],
+        "alpha_settings": {
+            "type": "REGULAR",
+            "settings": {
+                "instrumentType": "EQUITY",
+                "region": "USA",
+                "universe": "TOP1000",
+                "delay": 1,
+                "decay": 4,
+                "neutralization": "SECTOR",
+                "truncation": 0.02,
+                "pasteurization": "ON",
+                "testPeriod": "P2Y",
+                "unitHandling": "VERIFY",
+                "nanHandling": "ON",
+                "maxTrade": "OFF",
+                "language": "FASTEXPR",
+                "visualization": true
+            },
+            "regular": "<alpha_expression>"
+        }
+    },
+    {
+        "alpha_expression": "<alpha_expression>",
+        "economic_rationale": "The first term measures how consistently strong the growth score has been over the last year. The second computes an information ratio of low-volatility behavior: using the negative of 1\u2011month score volatility, a high ts_ir indicates that low-volatility conditions have persisted over the year. The alpha is thus high for stocks with persistently strong growth signals and persistently low risk, consistent with the hypothesis that such stable growth franchises are systematically underpriced relative to their risk.",
+        "data_fields_used": [
+            "mdl110_growth",
+            "mdl110_score"
+        ],
+        "operators_used": [
+            "add",
+            "ts_ir",
+            "reverse",
+            "ts_std_dev"
+        ],
+        "alpha_settings": {
+            "type": "REGULAR",
+            "settings": {
+                "instrumentType": "EQUITY",
+                "region": "USA",
+                "universe": "TOP1000",
+                "delay": 1,
+                "decay": 4,
+                "neutralization": "SECTOR",
+                "truncation": 0.02,
+                "pasteurization": "ON",
+                "testPeriod": "P2Y",
+                "unitHandling": "VERIFY",
+                "nanHandling": "ON",
+                "maxTrade": "OFF",
+                "language": "FASTEXPR",
+                "visualization": true
+            },
+            "regular": "<alpha_expression>"
+        }
+    },
+    {
+        "alpha_expression": "<alpha_expression>",
+        "economic_rationale": "This uses the 3\u2011month average growth score for a stable growth level and combines it with the negative of 3\u2011month entropy of the composite score\u2019s time series. Low entropy here indicates more predictable, less noisy behavior of the model score over time. The alpha thus selects stocks with robust, recent growth and a stable, low-uncertainty signal profile. Markets often overlook such boring but steadily compounding names, leading to excess returns versus the broader market.",
+        "data_fields_used": [
+            "mdl110_growth",
+            "mdl110_score"
+        ],
+        "operators_used": [
+            "add",
+            "rank",
+            "ts_mean",
+            "ts_entropy",
+            "reverse"
+        ],
+        "alpha_settings": {
+            "type": "REGULAR",
+            "settings": {
+                "instrumentType": "EQUITY",
+                "region": "USA",
+                "universe": "TOP1000",
+                "delay": 1,
+                "decay": 4,
+                "neutralization": "SECTOR",
+                "truncation": 0.02,
+                "pasteurization": "ON",
+                "testPeriod": "P2Y",
+                "unitHandling": "VERIFY",
+                "nanHandling": "ON",
+                "maxTrade": "OFF",
+                "language": "FASTEXPR",
+                "visualization": true
+            },
+            "regular": "<alpha_expression>"
+        }
+    }
+]
